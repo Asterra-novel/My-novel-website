@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101014">
+  <meta name="description" content="Enter Asterra: Beyond Heaven and discover stories beyond the edge of the known world.">
+  <title>ASTERRA — Beyond Heaven</title>
+  <style>
+    :root {
+      --bg: #0d0e12;
+      --panel: #15171d;
+      --panel-soft: #1b1d25;
+      --text: #f4f1eb;
+      --muted: #a4a6b2;
+      --gold: #d9b777;
+      --gold-bright: #f0d49a;
+      --line: rgba(255,255,255,.10);
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(16px);
+      background: rgba(13,14,18,.88); border-bottom: 1px solid var(--line);
+    }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-size: .94rem; font-weight: 800; letter-spacing: .17em; }
+    .brand-mark {
+      width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--gold);
+      color: var(--gold); transform: rotate(45deg); font-family: Georgia, serif; font-size: 1.15rem;
+    }
+    .brand-mark span { transform: rotate(-45deg); }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: .9rem; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold-bright); }
+    .nav-cta { padding: 10px 16px; border: 1px solid rgba(217,183,119,.55); border-radius: 3px; color: var(--gold-bright) !important; }
+    .hero {
+      position: relative; overflow: hidden; min-height: 590px; display: flex; align-items: center;
+      background:
+        radial-gradient(ellipse at 76% 35%, rgba(133,83,132,.20), transparent 34%),
+        radial-gradient(ellipse at 70% 78%, rgba(177,128,69,.12), transparent 36%),
+        linear-gradient(115deg, #111219 0%, #15131b 52%, #101116 100%);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero:before, .hero:after { content: ""; position: absolute; pointer-events: none; }
+    .hero:before {
+      width: 390px; height: 390px; right: 10%; top: 80px; border: 1px solid rgba(217,183,119,.22);
+      border-radius: 50%; box-shadow: 0 0 0 28px rgba(217,183,119,.025), 0 0 0 58px rgba(217,183,119,.02);
+    }
+    .hero:after {
+      width: 240px; height: 240px; right: calc(10% + 75px); top: 155px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(240,212,154,.9), rgba(164,110,125,.42) 24%, rgba(41,34,55,.88) 60%, rgba(13,14,18,.1) 72%);
+      filter: drop-shadow(0 0 55px rgba(217,183,119,.14));
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 650px; padding: 86px 0 96px; }
+    .eyebrow { color: var(--gold); font-size: .76rem; letter-spacing: .24em; text-transform: uppercase; font-weight: 700; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 { margin: 18px 0 8px; font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(3.4rem, 8vw, 6.5rem); line-height: .94; letter-spacing: -.055em; }
+    .hero h1 span { display: block; color: var(--gold-bright); font-style: italic; font-size: .57em; letter-spacing: .015em; margin-top: 19px; }
+    .hero-copy { max-width: 510px; margin: 28px 0 30px; color: #c2c0c9; font-size: 1.03rem; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 3px; font-weight: 750; font-size: .9rem; transition: transform .18s, background .18s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--gold); color: #17130d; }
+    .btn-primary:hover { background: var(--gold-bright); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--text); }
+    .hero-note { margin-top: 25px; color: #858794; font-size: .8rem; letter-spacing: .04em; }
+    section { padding: 76px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+    .section-head h2 { margin: 7px 0 0; font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -.035em; }
+    .section-head p { margin: 0; max-width: 420px; color: var(--muted); font-size: .94rem; }
+    .featured-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 44px; align-items: center; }
+    .cover {
+      min-height: 430px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+      padding: 30px; border: 1px solid rgba(217,183,119,.35);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(219,177,113,.4), transparent 12%),
+        radial-gradient(ellipse at 50% 44%, rgba(114,73,112,.62), transparent 34%),
+        linear-gradient(155deg, #25202d, #0e1018 65%);
+    }
+    .cover:before { content: ""; position: absolute; width: 240px; height: 240px; border: 1px solid rgba(240,212,154,.6); border-radius: 50%; left: 50%; top: 42%; transform: translate(-50%,-50%); box-shadow: 0 0 0 18px rgba(240,212,154,.035), 0 0 70px rgba(217,183,119,.12); }
+    .cover:after { content: "✦"; position: absolute; top: 28%; left: 50%; transform: translateX(-50%); font-size: 5rem; color: rgba(240,212,154,.8); text-shadow: 0 0 45px rgba(240,212,154,.4); }
+    .cover-top, .cover-bottom { position: relative; z-index: 1; text-align: center; }
+    .cover-top { font-size: .65rem; letter-spacing: .3em; color: var(--gold); }
+    .cover-title { font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: .08em; }
+    .cover-subtitle { margin-top: 10px; color: var(--gold-bright); font-family: Georgia, serif; font-style: italic; }
+    .cover-bottom { font-size: .7rem; letter-spacing: .2em; color: #b8a68b; }
+    .featured-copy h3 { font-family: Georgia, serif; font-size: 2rem; font-weight: 500; margin-bottom: 12px; }
+    .featured-copy p { color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
+    .tag { padding: 6px 10px; border: 1px solid var(--line); border-radius: 100px; color: #c5c2ca; font-size: .75rem; }
+    .library { background: #111218; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .novel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .novel-card { padding: 23px; min-height: 205px; background: var(--panel); border: 1px solid var(--line); transition: border-color .2s, transform .2s; }
+    .novel-card:hover { border-color: rgba(217,183,119,.5); transform: translateY(-3px); }
+    .card-icon { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(217,183,119,.45); color: var(--gold); font-size: 1.15rem; margin-bottom: 20px; }
+    .novel-card h3 { font-family: Georgia, serif; font-size: 1.35rem; font-weight: 500; margin-bottom: 8px; }
+    .novel-card p { color: var(--muted); font-size: .88rem; margin-bottom: 14px; }
+    .card-link { color: var(--gold-bright); font-size: .83rem; font-weight: 700; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .about-grid h2 { font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; line-height: 1.1; }
+    .about-grid p { color: var(--muted); }
+    .quote { padding: 26px; border-left: 2px solid var(--gold); background: var(--panel); color: #d8d3ca; font-family: Georgia, serif; font-size: 1.25rem; font-style: italic; }
+    footer { padding: 28px 0; border-top: 1px solid var(--line); color: #888a96; font-size: .8rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .mobile-menu { display: none; }
+    @media (max-width: 800px) {
+      .hero { min-height: 560px; }
+      .hero:before { width: 260px; height: 260px; right: -70px; top: 65px; opacity: .6; }
+      .hero:after { width: 160px; height: 160px; right: -20px; top: 115px; opacity: .65; }
+      .hero-content { padding: 95px 0 72px; }
+      .hero-copy { max-width: 470px; }
+      .featured-grid, .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .cover { min-height: 360px; }
+      .novel-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-head { align-items: start; flex-direction: column; }
+      .nav-links { gap: 15px; }
+    }
+    @media (max-width: 540px) {
+      .wrap { width: min(100% - 28px, var(--max)); }
+      .nav { min-height: 64px; }
+      .brand { font-size: .75rem; letter-spacing: .12em; }
+      .brand-mark { width: 29px; height: 29px; }
+      .nav-links { gap: 12px; font-size: .78rem; }
+      .nav-links a:nth-child(2) { display: none; }
+      .nav-cta { padding: 8px 10px; }
+      .hero { min-height: 530px; }
+      .hero:before { right: -130px; top: 100px; }
+      .hero:after { right: -80px; top: 150px; }
+      .hero h1 { font-size: clamp(3rem, 15vw, 4.4rem); }
+      .hero-copy { font-size: .95rem; }
+      section { padding: 56px 0; }
+      .novel-grid { grid-template-columns: 1fr; }
+      .novel-card { min-height: auto; }
+      .cover { min-height: 330px; }
+      .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="Asterra home">
+        <span class="brand-mark"><span>✦</span></span>
+        <span>ASTERRA STORIES</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#featured">Featured</a>
+        <a href="#library">Library</a>
+        <a class="nav-cta" href="#featured">Start Reading ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-content">
+          <div class="eyebrow">Original stories · Worlds beyond the known</div>
+          <h1>ASTERRA <span>Beyond Heaven</span></h1>
+          <p class="hero-copy">Somewhere beyond the edge of the world, a fallen star has changed everything. Enter a realm of buried truths, impossible choices, and a journey toward a heaven that may not be what it seems.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#featured">Discover the Novel <span aria-hidden="true">&nbsp; ↗</span></a>
+            <a class="btn btn-ghost" href="#library">Explore the Library</a>
+          </div>
+          <div class="hero-note">A work in progress · Written one chapter at a time</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="featured">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">The featured story</div>
+            <h2>A world touched by a fallen star.</h2>
+          </div>
+          <p>A first look into the universe of ASTERRA. The journey starts here.</p>
+        </div>
+        <div class="featured-grid">
+          <div class="cover" role="img" aria-label="Decorative fantasy cover concept for Asterra Beyond Heaven">
+            <div class="cover-top">AN ORIGINAL WEB NOVEL</div>
+            <div class="cover-bottom">
+              <div class="cover-title">ASTERRA</div>
+              <div class="cover-subtitle">Beyond Heaven</div>
+            </div>
+          </div>
+          <div class="featured-copy">
+            <div class="eyebrow">Fantasy · Mystery · Adventure</div>
+            <h3>ASTERRA: BEYOND HEAVEN</h3>
+            <p>A land scarred by the arrival of a fallen star. A world where legends conceal forgotten truths, and the path to heaven may demand more than anyone is willing to sacrifice.</p>
+            <p>Follow a journey through mystery, conflict, and the choices that shape what it means to be human. The deeper the truth goes, the less certain the world becomes.</p>
+            <div class="tags">
+              <span class="tag">Dark Fantasy</span><span class="tag">Adventure</span><span class="tag">Mystery</span><span class="tag">Philosophy</span>
+            </div>
+            <a class="btn btn-primary" href="#chapters">View Chapter List ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="library" id="library">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Your reading shelf</div>
+            <h2>Explore the library</h2>
+          </div>
+          <p>One home for your stories. More novels can be added here as your worlds grow.</p>
+        </div>
+        <div class="novel-grid">
+          <article class="novel-card">
+            <div class="card-icon" aria-hidden="true">✦</div>
+            <h3>ASTERRA: Beyond Heaven</h3>
+            <p>A fallen star. A fractured world. A truth hidden beyond the heavens.</p>
+            <a class="card-link" href="#chapters">Explore novel →</a>
+          </article>
+          <article class="novel-card">
+            <div class="card-icon" aria-hidden="true">◇</div>
+            <h3>Your Next Story</h3>
+            <p>Reserve a place for your next novel, short story, or side project.</p>
+            <a class="card-link" href="mailto:hello@example.com" onclick="event.preventDefault(); alert('This is a placeholder. You can replace it with your contact or story link later.');">Coming someday →</a>
+          </article>
+          <article class="novel-card">
+            <div class="card-icon" aria-hidden="true">☾</div>
+            <h3>Short Stories</h3>
+            <p>A future shelf for standalone tales from worlds large and small.</p>
+            <a class="card-link" href="#library">Coming someday →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="chapters">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Reading room</div>
+            <h2>Chapters will appear here</h2>
+          </div>
+          <p>This is the first UI version. Next, we'll create separate chapter pages and connect them to this section.</p>
+        </div>
+        <article class="novel-card">
+          <div class="eyebrow">ASTERRA: BEYOND HEAVEN</div>
+          <h3>Chapter library is being prepared</h3>
+          <p>Once we add your chapter files, this section will become a clickable chapter list with reading pages and previous/next navigation.</p>
+          <span class="tag">More chapters coming soon</span>
+        </article>
+      </div>
+    </section>
+
+    <section style="padding-top: 10px;">
+      <div class="wrap about-grid">
+        <div>
+          <div class="eyebrow">A note from the author</div>
+          <h2>Every world begins with a question.</h2>
+        </div>
+        <div>
+          <p>This website is the home of original stories in progress. It will grow chapter by chapter, alongside the worlds, characters, and questions behind them.</p>
+          <div class="quote">“The journey matters most when even the destination is a mystery.”</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Asterra Stories. Original fiction.</span>
+      <span>Built chapter by chapter.</span>
+    </div>
+  </footer>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
